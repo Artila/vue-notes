@@ -1,20 +1,44 @@
 <template>
   <div id="toolbar">
-    <i class="glyphicon glyphicon-plus"></i>
-    <i class="glyphicon glyphicon-star"></i>
-    <i class="glyphicon glyphicon-remove"></i>
+    <i 
+    	@click="addNote" 
+    	class="glyphicon glyphicon-plus">
+    </i>
+    <i 
+    	@click="toggleFavorite"
+    	:class="{ star: activeNote.favorite }"
+    	class="glyphicon glyphicon-star">
+    </i>
+    <i 
+    	@click="deleteNote" 
+    	class="glyphicon glyphicon-remove">
+    </i>
   </div>
 </template>
 
 <script>
+	import { mapGetters, mapActions } from 'vuex';
+	
+	export default {
+		computed: {
+			...mapGetters([
+				'activeNote'
+			])
+		},
+		methods: {
+			...mapActions([
+				'addNote',
+				'toggleFavorite',
+				'deleteNote'
+			])
+		}
+	}
 </script>
 
 <style>
   #toolbar {
-    float: left;
     padding: 35px 25px 25px 25px;
     width: 80px;
-    height: 100%;
     background-color: #30414d;
     color: #767676;
   }
