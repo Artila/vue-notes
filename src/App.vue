@@ -21,7 +21,7 @@
 </script>
 
 <style>
-  html, #app {
+  html{
     height: 100%;
   }
 
@@ -32,5 +32,11 @@
     border: 0;
     height: 100%;
     max-height: 100%;
+  }
+  
+  #app {
+  	display: flex;
+  	align-items: stretch;
+  	height: 100vh;
   }
 </style>
