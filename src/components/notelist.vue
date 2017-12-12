@@ -5,13 +5,19 @@
       <div class="btn-group btn-group-justified" role="group">
         <!--全部笔记-->
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">
+          <button 
+          	type="button" class="btn btn-default"
+          	:class="{ active: show === 'all'}"
+          	@click="toggleList('all')">
             全部笔记
           </button>
         </div>
         <!--所喜欢的笔记-->
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">
+          <button 
+          	type="button" class="btn btn-default"
+          	:class="{ active: show === 'favorite'}"
+          	@click="toggleList('favorite')">
             所喜欢的
           </button>
         </div>
@@ -20,24 +26,50 @@
     <!--笔记列表-->
     <div class="container">
       <div class="list-group">
-          <a class="list-group-item">
+          <div 
+          	v-for="(note, index) in filteredNotes"
+          	:key="index"
+          	:class="{ active: activeNote === note}"
+          	@click="updateActiveNote(note)"
+          	class="list-group-item">
             <h4 class="list-group-item-heading">
-
+							{{ note.content.trim().substring(0, 30) }}
             </h4>
-          </a>
+          </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+	import { mapState, mapGetters, mapActions } from 'vuex';
+	
+	export default {
+		computed: {
+			...mapState([
+				'activeNote',
+				'show'
+			]),
+			...mapGetters([
+				'allNotes',
+				'activeNote',
+				'filteredNotes'
+			])
+		},
+		methods: {
+			...mapActions([
+				'toggleList',
+				'updateActiveNote',
+				'toggleList'
+			])
+		}
+	}
+	
 </script>
 
 <style>
   #note-list {
-    float: left;
-    width: 300px;
-    height: 100%;
+    flex: 1;
     font-weight: 400;
     background-color: #f5f5f5;
   }
