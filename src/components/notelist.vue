@@ -33,7 +33,7 @@
           	@click="updateActiveNote(note)"
           	class="list-group-item">
             <h4 class="list-group-item-heading">
-							{{ note.content.trim().substring(0, 30) }}
+							{{ note.title }}
             </h4>
           </div>
       </div>
@@ -51,7 +51,6 @@
 				'show'
 			]),
 			...mapGetters([
-				'allNotes',
 				'activeNote',
 				'filteredNotes'
 			])
@@ -90,7 +89,6 @@
     overflow: auto;
   }
   #note-list .container .list-group-item {
-    border: 0;
     border-radius: 0;
   }
   .list-group-item-heading {
