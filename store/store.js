@@ -13,6 +13,9 @@ const getters = {
 	activeNote: state => {
 		return state.activeNote;
 	},
+	activeNoteTitle: state => {
+		return state.activeNote.title;
+	},
 	activeNoteContent: state => {
 		return state.activeNote.content;
 	},
@@ -29,8 +32,10 @@ const mutations = {
 	// 新增笔记，并把新增的笔记设为当前笔记
 	addNote(state) {		
 		const newNote = {
-			content: 'New note',
-			favorite: false
+			id: +new Date(),
+			title: '新笔记',
+			content: '从这里开始',
+			favorite: false		
 		};
 		state.notes.push(newNote);
 		state.activeNote = newNote;
@@ -39,10 +44,19 @@ const mutations = {
 	editNote(state, content) {
 		state.activeNote.content = content;
 	},
+	// 编辑笔记标题
+	editNoteTitle(state, title) {
+		state.activeNote.title = title;
+	},
 	// 删除笔记
 	deleteNote(state) {
-		state.notes.$remove(state.activeNote);
-		state.activeNote = state.notes[0];
+    for (let i = 0; i < state.notes.length; i++) {
+      if (state.notes[i].id === state.activeNote.id) {
+        state.notes.splice(i, 1);
+        state.activeNote = state.notes[0] || {};
+        return;
+      }
+    }
 	},
 	// 设为当前笔记
 	setActiveNote(state, note) {
@@ -67,6 +81,9 @@ const actions = {
 	editNote({ commit }, e) {
 		commit('editNote', e.target.value);
 	},
+	editNoteTitle({ commit }, e) {
+		commit('editNoteTitle', e.target.value);
+	},
 	// 切换当前笔记的favorite状态
 	toggleFavorite({ commit }) {
 		commit('toggleFavorite');
@@ -79,6 +96,7 @@ const actions = {
 	updateActiveNote({ commit }, note) {
 		commit('setActiveNote', note);
 	},
+	// 切换笔记列表
 	toggleList({ commit }, show) {
 		commit('toggleList', show);
 	}
