@@ -1,11 +1,12 @@
 <template>
   <div id="editor">
   	<div class="form-group">
-  		<!--<input 
-  			v-model="title"
+  		<input 
+  			:value="activeNoteTitle"
+  			@input="editNoteTitle"
   			type="text" name="title" 
   			class="title form-control" 
-  			placeholder="请输入标题">-->
+  			placeholder="请输入标题">
   		<textarea 
   			:value="activeNoteContent"
   			@input="editNote"
@@ -21,12 +22,14 @@
 	export default {
 		computed: {
 			...mapGetters([
+				'activeNoteTitle',
 				'activeNoteContent'
 			])
 		},
 		methods: {
 			...mapActions([
-				'editNote'
+				'editNote',
+				'editNoteTitle'
 			])
 		}
 	}
